@@ -32,13 +32,13 @@ int main(int argc, char** argv) {
     {
         switch(opt)
         {
-        case 'add': flag_a = 1;
+        case 'a': flag_a = 1;
             break;
-        case 'sub': flag_s = 1;
+        case 's': flag_s = 1;
             break;
-        case 'mul': flag_m = 1;
+        case 'm': flag_m = 1;
             break;
-        case 'div': flag_d = 1;
+        case 'd': flag_d = 1;
         case '?': printf("Unknown parameter: -%c\n", optopt);
         }
     }
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
         res = a / b;
     }
 
-    printf("res = %d", res);
+    printf("res = %d\n", res);
 
     return 0;
 }
