@@ -8,12 +8,17 @@
 
 void ls(char* path, int flag_a, int flag_R, int flag_l)
 {
-    DIR* d = opendir(".");
+    DIR* d;
     struct dirent* dnt;
     struct stat filestat;
-    
+    d = opendir(path);
 
     while((dnt = readdir(d)) != NULL) {
+
+        if (flag_a == 0 && dnt->d_name[0] == '.') 
+        {
+            continue;
+        }
 
         char new_path[512];
         snprintf(new_path, 512, "%s/%s", path, dnt->d_name);
@@ -24,10 +29,13 @@ void ls(char* path, int flag_a, int flag_R, int flag_l)
             struct passwd* user = getpwuid(filestat.st_uid);
             struct group* group = getgrgid(filestat.st_gid);
 
+            char time[50];
             printf("%-4hu", filestat.st_nlink);
             printf("%-20s", user->pw_name);
             printf("%-8s", group->gr_name);
             printf("%-6lld", filestat.st_size);
+            strftime(time, 50, "%e %b %H:%M", localtime(&filestat.st_mtime));
+            printf(" %s", time);
             printf(" ");
         }
 
@@ -48,6 +56,10 @@ void ls(char* path, int flag_a, int flag_R, int flag_l)
     d = opendir(path);
     while((dnt = readdir(d)) != NULL)
     {
+        if (flag_a == 0 && dnt->d_name[0] == '.')
+        {
+            continue;
+        }
 
         char new_path[512];
         snprintf(new_path, 512, "%s/%s", path, dnt->d_name);
